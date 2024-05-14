@@ -6,9 +6,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async create(dto: CreateUserDto): Promise<string> {
-    console.log('dto:', dto);
-
+  async create(dto: CreateUserDto): Promise<{ id: number; name: string }> {
     const user = await this.prisma.user.create({
       data: {
         email: dto.email,
@@ -19,8 +17,7 @@ export class UserService {
         wallet: { create: { balance: dto.balance } },
       },
     });
-    console.log('created user:', user);
 
-    return 'Hello World!';
+    return { id: user.id, name: user.name };
   }
 }

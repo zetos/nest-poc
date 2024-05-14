@@ -2,9 +2,9 @@ import {
   IsEmail,
   IsEnum,
   IsInt,
-  IsOptional,
   IsString,
   Min,
+  ValidateIf,
 } from 'class-validator';
 
 enum UserRole {
@@ -26,12 +26,12 @@ export class CreateUserDto {
   type: string;
 
   @IsString()
-  @IsOptional()
-  cpf?: string;
+  @ValidateIf((obj) => obj.type === UserRole.SHOPKEEPER)
+  cnpj?: string;
 
   @IsString()
-  @IsOptional()
-  cnpj?: string;
+  @ValidateIf((obj) => obj.type === UserRole.COMMON)
+  cpf?: string;
 
   @IsInt()
   @Min(0)
