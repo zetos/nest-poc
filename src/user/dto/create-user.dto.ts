@@ -2,10 +2,12 @@ import {
   IsEmail,
   IsEnum,
   IsInt,
+  IsNotEmpty,
   IsString,
   Min,
   ValidateIf,
 } from 'class-validator';
+import { IsCNPJ, IsCPF } from 'src/common/validators';
 
 enum UserRole {
   SHOPKEEPER = 'shopkeeper',
@@ -14,22 +16,25 @@ enum UserRole {
 
 export class CreateUserDto {
   @IsEmail()
+  @IsNotEmpty()
   email: string;
 
+  @IsNotEmpty()
   @IsString()
   name: string;
 
+  @IsNotEmpty()
   @IsString()
   hash: string;
 
   @IsEnum(UserRole)
-  type: string;
+  type: UserRole;
 
-  @IsString()
+  @IsCNPJ()
   @ValidateIf((obj) => obj.type === UserRole.SHOPKEEPER)
   cnpj?: string;
 
-  @IsString()
+  @IsCPF()
   @ValidateIf((obj) => obj.type === UserRole.COMMON)
   cpf?: string;
 
