@@ -10,8 +10,8 @@ export class TransferController {
   async postTransfer(@Body() dto: CreateTransferDto): Promise<{
     id: number;
     createdAt: Date;
-    senderId: number;
-    receiverId: number;
+    creditorId: number;
+    debitorId: number;
     amount: string;
   }> {
     return this.transferService.createTransfer(dto);

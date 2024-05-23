@@ -52,10 +52,10 @@ model Wallet {
 model Transference {
   id         Int      @id @default(autoincrement())
   createdAt  DateTime @default(now())
-  senderId   Int
-  sender     User     @relation("SentTransferences", fields: [senderId], references: [id])
-  receiverId Int
-  receiver   User     @relation("ReceivedTransferences", fields: [receiverId], references: [id])
+  creditorId Int
+  creditor   User     @relation("SentTransferences", fields: [creditorId], references: [id])
+  debitorId  Int
+  debitor    User     @relation("ReceivedTransferences", fields: [debitorId], references: [id])
 
   amount BigInt
 
