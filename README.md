@@ -27,9 +27,10 @@
 - [x] prisma error: Not Found
 - [x] prisma error: Unique
 - [ ] migrate amount BigInt to Int
-- [ ] add hash algorithm
-- [ ] add e2e tests
+- [x] add hash algorithm
+- [x] add e2e tests
 - [ ] mock fake authorizer
+- [ ] add retry fun
 - [ ] add unity tests
 - [ ] add integration tests
 - [ ] add property tests?
