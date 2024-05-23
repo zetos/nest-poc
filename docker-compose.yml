@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: nest
     networks:
-      - satanicHive
+      - funNetwork
   test-db:
     image: postgres:latest
     ports:
@@ -19,6 +19,6 @@ services:
       POSTGRES_PASSWORD: 123
       POSTGRES_DB: nest
     networks:
-      - satanicHive
+      - funNetwork
 networks:
-  satanicHive:
+  funNetwork:
