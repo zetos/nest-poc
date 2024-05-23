@@ -7,7 +7,7 @@ import {
   Min,
   ValidateIf,
 } from 'class-validator';
-import { IsCNPJ, IsCPF } from 'src/common/validators';
+import { IsCNPJ, IsCPF } from '../../common/validators';
 
 enum UserRole {
   SHOPKEEPER = 'shopkeeper',

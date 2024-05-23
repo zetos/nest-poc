@@ -54,7 +54,7 @@ export function IsCNPJ(validationOptions?: ValidationOptions) {
           return typeof value === 'string' && isValidCNPJ(value);
         },
         defaultMessage(args: ValidationArguments): string {
-          return `${args.property} must be a valid cnpj.`;
+          return `${args.property} must be valid.`;
         },
       },
     });

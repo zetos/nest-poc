@@ -52,7 +52,7 @@ export function IsCPF(validationOptions?: ValidationOptions) {
           return typeof value === 'string' && isValidCPF(value);
         },
         defaultMessage(args: ValidationArguments): string {
-          return `${args.property} must be a valid cpf.`;
+          return `${args.property} must be valid.`;
         },
       },
     });
