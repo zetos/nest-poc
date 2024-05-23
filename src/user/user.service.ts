@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class UserService {
@@ -10,10 +10,11 @@ export class UserService {
     const user = await this.prisma.user.create({
       data: {
         email: dto.email,
-        hash: dto.hash,
+        hash: dto.hash, // TODO fix it.
         name: dto.name,
         cnpj: dto.cnpj,
         cpf: dto.cpf,
+        type: dto.type,
         wallet: { create: { balance: dto.balance } },
       },
     });
