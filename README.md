@@ -23,6 +23,10 @@
 - [ ] add integration tests
 - [ ] add property tests?
 - [ ] edit README
+  - [ ] summary
+  - [ ] endpoints
+  - [ ] error handling
+  - [ ] about tests
 - [ ] serverless
 - [ ] CI github actions
 - [ ] Swagger
