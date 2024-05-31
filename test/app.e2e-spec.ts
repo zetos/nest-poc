@@ -3,15 +3,22 @@ import { INestApplication, ValidationPipe } from '@nestjs/common';
 import * as pactum from 'pactum';
 import { like } from 'pactum-matchers';
 import { AppModule } from './../src/app.module';
+import { AuthorizerService } from '../src/authorizer/authorizer.service';
 
 describe('AppController (e2e)', () => {
   let app: INestApplication;
   // let prisma: PrismaService;
+  const authorizerService: AuthorizerService = {
+    authorize: () => Promise.resolve(true),
+  };
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [AppModule],
-    }).compile();
+    })
+      .overrideProvider(AuthorizerService)
+      .useValue(authorizerService)
+      .compile();
 
     app = moduleFixture.createNestApplication();
     app.useGlobalPipes(
@@ -196,6 +203,29 @@ describe('AppController (e2e)', () => {
           message: ['creditorId is a shopkeeper.'],
           error: 'Bad Request',
           statusCode: 400,
+        });
+    });
+
+    it('Try a denied transfer', () => {
+      // authorizerService = new AuthorizerService();
+      jest.spyOn(authorizerService, 'authorize').mockImplementationOnce(() => {
+        console.log('>>>>> MOCK CALLED !!!');
+        return Promise.resolve(false);
+      });
+
+      return pactum
+        .spec()
+        .post('/transfer')
+        .withBody({
+          creditorId: 1,
+          debitorId: 2,
+          amount: 5,
+        })
+        .expectStatus(502)
+        .expectBody({
+          message: ['Authorizer denial.'],
+          error: 'Bad Gateway',
+          statusCode: 502,
         });
     });
   });

@@ -17,7 +17,7 @@
 - [ ] migrate amount BigInt to Int
 - [x] add hash algorithm
 - [x] add e2e tests
-- [ ] mock fake authorizer
+- [x] mock fake authorizer
 - [ ] add retry fun
 - [ ] add unity tests
 - [ ] add integration tests
