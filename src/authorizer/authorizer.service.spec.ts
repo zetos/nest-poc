@@ -1,6 +1,5 @@
 import { Test } from '@nestjs/testing';
 import { AuthorizerService } from './authorizer.service';
-import { BadGatewayException } from '@nestjs/common';
 
 describe('AuthorizerService', () => {
   let authorizerService: AuthorizerService;
@@ -40,12 +39,11 @@ describe('AuthorizerService', () => {
         json: jest.fn().mockResolvedValue(mockResponse),
       });
 
-      try {
-        await authorizerService.authorize();
-      } catch (error) {
-        expect(error).toBeInstanceOf(BadGatewayException);
-        expect(error.message).toBe('Authorizer denial.');
-      }
+      // Call the authorize method
+      const result = await authorizerService.authorize();
+
+      // Assertions
+      expect(result).toBe(false);
     });
   });
 });

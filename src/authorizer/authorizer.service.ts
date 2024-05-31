@@ -1,4 +1,4 @@
-import { BadGatewayException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class AuthorizerService {
@@ -6,10 +6,6 @@ export class AuthorizerService {
     const authorizerResponse: { permission: boolean } = await fetch(
       'https://run.mocky.io/v3/20b979c1-b861-4be7-a8f6-1cfaedbc00c2',
     ).then((response) => response.json());
-
-    if (authorizerResponse.permission !== true) {
-      throw new BadGatewayException('Authorizer denial.');
-    }
 
     return authorizerResponse.permission;
   }

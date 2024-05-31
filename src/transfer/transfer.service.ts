@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import {
+  BadGatewayException,
+  BadRequestException,
+  Injectable,
+} from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateTransferDto } from './dto/create-transfer.dto';
 import { AuthorizerService } from '../authorizer/authorizer.service';
@@ -34,12 +38,11 @@ export class TransferService {
       throw new BadRequestException(['amount is too high.']);
     }
 
-    await this.authorizer.authorize();
-    // const authorizerResponse = await this.authorizer.authorize();
+    const authorizerResponse = await this.authorizer.authorize();
 
-    // if (authorizerResponse !== true) {
-    //   throw new BadGatewayException('Authorizer denial.');
-    // }
+    if (authorizerResponse !== true) {
+      throw new BadGatewayException(['Authorizer denial.']);
+    }
 
     const newTransference = await this.prisma.transference.create({
       data: {
