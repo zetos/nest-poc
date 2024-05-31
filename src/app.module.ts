@@ -5,6 +5,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { UserModule } from './user/user.module';
 import { APP_FILTER } from '@nestjs/core';
 import { PrismaExceptionFilter } from './common/filters';
+import { AuthorizerModule } from './authorizer/authorizer.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { PrismaExceptionFilter } from './common/filters';
     TransferModule,
     UserModule,
     PrismaModule,
+    AuthorizerModule,
   ],
   providers: [
     {

@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateTransferDto } from './dto/create-transfer.dto';
-import { AuthorizerService } from 'src/authorizer/authorizer.service';
+import { AuthorizerService } from '../authorizer/authorizer.service';
 
 @Injectable()
 export class TransferService {

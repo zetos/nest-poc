@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TransferController } from './transfer.controller';
 import { TransferService } from './transfer.service';
-import { AuthorizerService } from 'src/authorizer/authorizer.service';
+import { AuthorizerService } from '../authorizer/authorizer.service';
 
 @Module({
   controllers: [TransferController],
