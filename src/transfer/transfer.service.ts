@@ -6,6 +6,7 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateTransferDto } from './dto/create-transfer.dto';
 import { AuthorizerService } from '../authorizer/authorizer.service';
+import { retry } from '../common/util';
 
 @Injectable()
 export class TransferService {
@@ -38,7 +39,7 @@ export class TransferService {
       throw new BadRequestException(['amount is too high.']);
     }
 
-    const authorizerResponse = await this.authorizer.authorize();
+    const authorizerResponse = await retry(this.authorizer.authorize);
 
     if (authorizerResponse !== true) {
       throw new BadGatewayException(['Authorizer denial.']);

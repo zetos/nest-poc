@@ -207,11 +207,9 @@ describe('AppController (e2e)', () => {
     });
 
     it('Try a denied transfer', () => {
-      // authorizerService = new AuthorizerService();
-      jest.spyOn(authorizerService, 'authorize').mockImplementationOnce(() => {
-        console.log('>>>>> MOCK CALLED !!!');
-        return Promise.resolve(false);
-      });
+      jest
+        .spyOn(authorizerService, 'authorize')
+        .mockImplementationOnce(() => Promise.resolve(false));
 
       return pactum
         .spec()
