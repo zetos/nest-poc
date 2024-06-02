@@ -18,9 +18,9 @@
 - [x] add hash algorithm
 - [x] add e2e tests
 - [x] mock fake authorizer
-- [x] add retry fun
-- [ ] add unity tests
-- [ ] add integration tests
+- [x] add fetchRetry fun
+- [x] add unity tests
+- [x] add integration tests
 - [ ] add property tests?
 - [ ] edit README
   - [ ] summary
