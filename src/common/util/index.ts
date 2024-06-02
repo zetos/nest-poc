@@ -1,4 +1,4 @@
-const findSubstringInArray = (
+export const findSubstringInArray = (
   str: string,
   arr: string[],
   i = 0,
@@ -9,21 +9,23 @@ const findSubstringInArray = (
       ? arr[i]
       : findSubstringInArray(str, arr, i + 1);
 
-const sleep = (ms) => {
+export const sleep = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-const retry = async <T>(fun: () => Promise<T>, i = 0): Promise<T> => {
-  try {
-    return fun();
-  } catch (err) {
-    if (i < 3) {
-      await sleep(500);
-      return retry(fun, i + 1);
-    } else {
-      throw err;
-    }
-  }
-};
+export const fetchRetry = async (req: Request, i = 0): Promise<Response> => {
+  const response = await fetch(req);
 
-export { findSubstringInArray, sleep, retry };
+  if (i >= 3) {
+    throw new Error('Reached maximum amount of retries');
+  } else if (
+    response.status === 500 ||
+    response.status === 502 ||
+    response.status === 503 ||
+    response.status === 504
+  ) {
+    await sleep(500);
+    return fetchRetry(req, i + 1);
+  }
+  return response;
+};
