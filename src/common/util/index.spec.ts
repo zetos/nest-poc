@@ -1,5 +1,31 @@
 import * as utilModule from './index';
 
+describe('findSubstringInArray', () => {
+  test('should find the substring in the array', () => {
+    const str = 'hello';
+    const arr = ['world', 'hello', 'goodbye'];
+    expect(utilModule.findSubstringInArray(str, arr)).toBe('hello');
+  });
+
+  test('should return null if substring is not found in the array', () => {
+    const str = 'foo';
+    const arr = ['bar', 'baz', 'qux'];
+    expect(utilModule.findSubstringInArray(str, arr)).toBeNull();
+  });
+
+  test('should return null if the array is empty', () => {
+    const str = 'hello';
+    const arr: string[] = [];
+    expect(utilModule.findSubstringInArray(str, arr)).toBeNull();
+  });
+
+  test('should return the first match if array contains duplicate substrings', () => {
+    const str = 'hello_one';
+    const arr = ['world', 'hello', 'hello_o', 'goodbye'];
+    expect(utilModule.findSubstringInArray(str, arr)).toBe('hello');
+  });
+});
+
 describe('sleep', () => {
   jest.useFakeTimers();
 
