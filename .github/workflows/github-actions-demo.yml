@@ -67,4 +67,4 @@ jobs:
       - name: Run E2E tests
         env:
           DATABASE_URL: postgres://test_user:test_password@localhost:5432/test_db
-        run: pnpm test:e2e
+        run: pnpm test:e2e:ci
