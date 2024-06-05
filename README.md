@@ -28,8 +28,8 @@
   - [ ] error handling
   - [ ] about tests
 - [ ] serverless
-- [ ] CI github actions
-- [ ] Swagger
+- [x] CI github actions
+- [x] Swagger
 - [ ] Add drizzle comparation
 
 ## Description
