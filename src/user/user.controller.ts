@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { UserService } from './user.service';
@@ -17,6 +17,16 @@ export class UserController {
   })
   @Post()
   create(@Body() dto: CreateUserDto): Promise<{ id: number; name: string }> {
+    if (dto.type === 'common' && dto.cnpj) {
+      throw new BadRequestException([
+        'CNPJ should be empty for a COMMON user.',
+      ]);
+    } else if (dto.type === 'shopkeeper' && dto.cpf) {
+      throw new BadRequestException([
+        'CPF should be empty for a SHOPKEEPER user.',
+      ]);
+    }
+
     return this.userService.create(dto);
   }
 }

@@ -58,6 +58,48 @@ describe('AppController (e2e)', () => {
         });
     });
 
+    it('Tries to create a common user with cnpj', () => {
+      return pactum
+        .spec()
+        .post('/user')
+        .withBody({
+          email: 'mary2@example.com',
+          name: 'Mary Doe Again',
+          hash: '123',
+          type: 'common',
+          cpf: '014.359.830-92',
+          cnpj: '66.166.434/0001-74',
+          balance: 500,
+        })
+        .expectStatus(400)
+        .expectBody({
+          error: 'Bad Request',
+          message: ['CNPJ should be empty for a COMMON user.'],
+          statusCode: 400,
+        });
+    });
+
+    it('Tries to create a shopkeeper user with cpf', () => {
+      return pactum
+        .spec()
+        .post('/user')
+        .withBody({
+          email: 'mary2@example.com',
+          name: 'Mary Doe Again',
+          hash: '123',
+          type: 'shopkeeper',
+          cpf: '014.359.830-92',
+          cnpj: '66.166.434/0001-74',
+          balance: 500,
+        })
+        .expectStatus(400)
+        .expectBody({
+          error: 'Bad Request',
+          message: ['CPF should be empty for a SHOPKEEPER user.'],
+          statusCode: 400,
+        });
+    });
+
     it('Create a shopkeeper user', () => {
       return pactum
         .spec()

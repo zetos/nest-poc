@@ -53,16 +53,16 @@ export class CreateUserDto {
     example: '96.886.415/0001-83',
     description: 'The CNPJ of a shopkeeper user.',
   })
-  @IsCNPJ()
   @ValidateIf((obj) => obj.type === UserRole.SHOPKEEPER)
+  @IsCNPJ()
   cnpj?: string;
 
   @ApiPropertyOptional({
     example: '421.923.410-16',
     description: 'The CPF of a shopkeeper user.',
   })
-  @IsCPF()
   @ValidateIf((obj) => obj.type === UserRole.COMMON)
+  @IsCPF()
   cpf?: string;
 
   @ApiProperty({
