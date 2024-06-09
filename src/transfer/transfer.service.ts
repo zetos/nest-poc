@@ -44,13 +44,23 @@ export class TransferService {
       throw new BadGatewayException(['Authorizer denial.']);
     }
 
-    const newTransference = await this.prisma.transference.create({
-      data: {
-        amount: dto.amount,
-        creditorId: dto.creditorId,
-        debitorId: dto.debitorId,
-      },
-    });
+    const [newTransference, _cred, _deb] = await this.prisma.$transaction([
+      this.prisma.transference.create({
+        data: {
+          amount: dto.amount,
+          creditorId: dto.creditorId,
+          debitorId: dto.debitorId,
+        },
+      }),
+      this.prisma.wallet.update({
+        where: { userId: dto.creditorId },
+        data: { balance: { decrement: dto.amount } },
+      }),
+      this.prisma.wallet.update({
+        where: { userId: dto.debitorId },
+        data: { balance: { increment: dto.amount } },
+      }),
+    ]);
 
     // TODO: ch amount type to Int
     return { ...newTransference, amount: newTransference.amount.toString() };
