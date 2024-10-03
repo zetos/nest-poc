@@ -7,14 +7,14 @@ export class CreateTransferDto {
     example: 1,
     description: 'The id of a creditor (common user).',
   })
-  creditorId: number;
+  creditorId!: number;
 
   @ApiProperty({
     example: 2,
     description: 'The id of a debitor (any user).',
   })
   @IsInt()
-  debitorId: number;
+  debitorId!: number;
 
   @ApiProperty({
     example: 100,
@@ -23,5 +23,5 @@ export class CreateTransferDto {
   })
   @IsInt()
   @Min(1)
-  amount: number;
+  amount!: number;
 }

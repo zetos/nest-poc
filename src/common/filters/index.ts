@@ -1,3 +1,3 @@
-import { PrismaExceptionFilter } from './prisma-exception.filter';
+// import { PrismaExceptionFilter } from './prisma-exception.filter';
 
-export { PrismaExceptionFilter };
+// export { PrismaExceptionFilter };

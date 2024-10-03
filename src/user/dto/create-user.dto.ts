@@ -23,7 +23,7 @@ export class CreateUserDto {
   })
   @IsEmail()
   @IsNotEmpty()
-  email: string;
+  email!: string;
 
   @ApiProperty({
     example: 'John Doe',
@@ -31,7 +31,7 @@ export class CreateUserDto {
   })
   @IsNotEmpty()
   @IsString()
-  name: string;
+  name!: string;
 
   @ApiProperty({
     example: 'foobar123',
@@ -39,7 +39,7 @@ export class CreateUserDto {
   })
   @IsNotEmpty()
   @IsString()
-  hash: string;
+  hash!: string;
 
   @ApiProperty({
     example: 'common',
@@ -47,7 +47,7 @@ export class CreateUserDto {
     enum: UserRole,
   })
   @IsEnum(UserRole)
-  type: UserRole;
+  type!: UserRole;
 
   @ApiPropertyOptional({
     example: '96.886.415/0001-83',
@@ -72,5 +72,5 @@ export class CreateUserDto {
   })
   @IsInt()
   @Min(0)
-  balance: number;
+  balance!: number;
 }

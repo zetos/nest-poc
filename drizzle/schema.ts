@@ -8,13 +8,13 @@ import {
   pgEnum,
 } from 'drizzle-orm/pg-core';
 
-import { InferSelectModel, sql } from 'drizzle-orm';
+import { relations, sql } from 'drizzle-orm';
 
 // Enum definition
-export const userTypeEnum = pgEnum('userType', ['common', 'otherTypes']);
+export const userTypeEnum = pgEnum('userType', ['common', 'shopkeeper']);
 
 // User table definition
-const users = pgTable('users', {
+export const users = pgTable('users', {
   id: serial('id').primaryKey().notNull(),
   createdAt: timestamp('createdAt').defaultNow().notNull(),
   updatedAt: timestamp('updatedAt')
@@ -30,7 +30,7 @@ const users = pgTable('users', {
 });
 
 // Wallet table definition
-const wallet = pgTable('wallet', {
+export const wallet = pgTable('wallet', {
   id: serial('id').primaryKey().notNull(),
   createdAt: timestamp('createdAt').defaultNow().notNull(),
   updatedAt: timestamp('updatedAt')
@@ -45,7 +45,7 @@ const wallet = pgTable('wallet', {
 });
 
 // Transference table definition
-const transferences = pgTable('transferences', {
+export const transferences = pgTable('transferences', {
   id: serial('id').primaryKey().notNull(),
   createdAt: timestamp('createdAt').defaultNow().notNull(),
   creditorId: integer('creditorId')
@@ -57,7 +57,33 @@ const transferences = pgTable('transferences', {
   amount: bigint('amount', { mode: 'bigint' }).notNull(),
 });
 
+// Relations
+export const usersRelations = relations(users, ({ one, many }) => ({
+  wallet: one(wallet, { fields: [users.id], references: [wallet.userId] }),
+  sentTransferences: many(transferences, { relationName: 'SentTransferences' }),
+  receivedTransferences: many(transferences, {
+    relationName: 'ReceivedTransferences',
+  }),
+}));
+
+export const walletRelations = relations(wallet, ({ one }) => ({
+  user: one(users, { fields: [wallet.userId], references: [users.id] }),
+}));
+
+export const transferencesRelations = relations(transferences, ({ one }) => ({
+  creditor: one(users, {
+    fields: [transferences.creditorId],
+    references: [users.id],
+    relationName: 'SentTransferences',
+  }),
+  debitor: one(users, {
+    fields: [transferences.debitorId],
+    references: [users.id],
+    relationName: 'ReceivedTransferences',
+  }),
+}));
+
 // Infer models
-export type User = InferSelectModel<typeof users>;
-export type Wallet = InferSelectModel<typeof wallet>;
-export type Transference = InferSelectModel<typeof transferences>;
+export type InsertUser = typeof users.$inferInsert;
+// export type Wallet = InferInsertModel<typeof wallet>;
+// export type Transference = InferInsertModel<typeof transferences>;

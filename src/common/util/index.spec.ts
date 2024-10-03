@@ -109,7 +109,9 @@ describe('fetchRetry', () => {
     try {
       await utilModule.fetchRetry(req);
     } catch (err) {
-      expect(err.message).toEqual('Reached maximum amount of retries');
+      expect((err as Error).message).toEqual(
+        'Reached maximum amount of retries',
+      );
       expect(mockFetch).toHaveBeenCalledTimes(4);
       expect(sleepSpy).toHaveBeenCalledTimes(3); // Two retries, so two calls to sleep
       expect(sleepSpy).toHaveBeenLastCalledWith(500); // Ensure the last sleep call waited for 500ms
