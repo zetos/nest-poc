@@ -1,3 +1,4 @@
-// import { PrismaExceptionFilter } from './prisma-exception.filter';
+import { DrizzleExceptionFilter } from './drizzle-exception.filter';
+import { DatabaseExceptionFilter } from './pg-exception.filter';
 
-// export { PrismaExceptionFilter };
+export { DrizzleExceptionFilter, DatabaseExceptionFilter };

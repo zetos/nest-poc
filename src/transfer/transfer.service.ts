@@ -4,7 +4,7 @@ import {
   Inject,
   Injectable,
 } from '@nestjs/common';
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 
 import { CreateTransferDto } from './dto/create-transfer.dto';
 import { AuthorizerService } from '../authorizer/authorizer.service';
@@ -79,42 +79,58 @@ export class TransferService {
     //   }),
     // ]);
 
-    const [newTransference, _cred, _deb] = await this.db.transaction(
-      async (tx) => {
+    const newTransference = await this.db
+      .transaction(async (tx) => {
         const tran = await tx
           .insert(transferences)
           .values({
             amount: BigInt(dto.amount),
             creditorId: dto.creditorId,
             debitorId: dto.debitorId,
+            createdAt: sql`CURRENT_TIMESTAMP`,
           })
-          .returning();
+          .returning()
+          .catch((e) => {
+            console.error('>>> BAD TRANSFERENCE !!!!', e);
+            throw e;
+          });
 
         const _cred = await tx
           .update(wallet)
           .set({
-            balance: creditorWallet.balance - BigInt(dto.amount),
+            balance: sql`${wallet.balance} - ${BigInt(dto.amount)}`,
           })
           .where(eq(wallet.userId, dto.creditorId))
-          .execute();
+          .execute()
+          .catch((e) => {
+            console.error('>>> BAD WALLET UPDATE !!!!');
+            throw e;
+          });
 
         const _deb = await tx
           .select()
           .from(wallet)
           .where(eq(wallet.userId, dto.debitorId))
-          .execute();
+          .execute()
+          .catch((e) => {
+            console.error('>>> BAD DEBITOR !!!!');
+            throw e;
+          });
 
         if (_deb.length === 0) {
           throw new BadRequestException(['debitorId not found.']);
         }
 
-        return [tran, _cred, _deb];
-      },
-    );
+        return tran[0];
+      })
+      .catch((e) => {
+        console.error('>>>> TRANSACTION ERR !!');
+        throw e;
+      });
 
     return {
-      ...newTransference[0],
-      amount: newTransference[0].amount.toString(),
+      ...newTransference,
+      amount: newTransference.amount.toString(),
     };
   }
 }

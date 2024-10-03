@@ -32,10 +32,10 @@ describe('AppController (e2e)', () => {
     pactum.request.setBaseUrl('http://localhost:3001');
   });
 
-  afterAll(() => {
-    app.close().finally(() => {
-      // console.log('Application shutdown after module cleanup');
-      // process.exit(0);
+  afterAll(async () => {
+    await app.close().finally(() => {
+      console.log('Application shutdown after module cleanup');
+      //process.exit(0);
     });
   });
 
@@ -140,7 +140,7 @@ describe('AppController (e2e)', () => {
         });
     });
 
-    it.failing('Try to create a repeated user', () => {
+    it('Try to create a repeated user', () => {
       return pactum
         .spec()
         .post('/user')
@@ -162,7 +162,7 @@ describe('AppController (e2e)', () => {
   });
 
   describe('Transfer', () => {
-    it.failing('Create a successful transfer', () => {
+    it('Create a successful transfer', () => {
       return pactum
         .spec()
         .post('/transfer')
@@ -181,7 +181,7 @@ describe('AppController (e2e)', () => {
         });
     });
 
-    it.failing('Try a bad debitorId transfer', () => {
+    it('Try a bad debitorId transfer', () => {
       return pactum
         .spec()
         .post('/transfer')
