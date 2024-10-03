@@ -33,10 +33,10 @@ export const users = pgTable('users', {
 export const wallet = pgTable('wallet', {
   id: serial('id').primaryKey().notNull(),
   createdAt: timestamp('createdAt').defaultNow().notNull(),
-  updatedAt: timestamp('updatedAt')
+  updatedAt: timestamp('updatedAt', { mode: 'date' })
     .defaultNow()
     .notNull()
-    .$onUpdate(() => sql`CURRENT_TIMESTAMP`),
+    .$onUpdate(() => new Date()),
   balance: bigint('balance', { mode: 'bigint' }).notNull(),
   userId: integer('userId')
     .unique()
