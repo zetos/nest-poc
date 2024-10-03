@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { Pool } from 'pg';
 import { drizzle } from 'drizzle-orm/node-postgres';
@@ -6,7 +6,7 @@ import * as schema from '../../drizzle/schema';
 
 export const DRIZZLE = Symbol('dizzle-connection');
 
-//@Global()
+@Global()
 @Module({
   providers: [
     {
