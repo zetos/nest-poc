@@ -28,11 +28,6 @@ export class TransferService {
     debitorId: number;
     amount: string;
   }> {
-    // const creditor = await this.prisma.user.findUnique({
-    //   where: { id: dto.creditorId },
-    //   include: { wallet: true },
-    // });
-
     const creditor = await this.db
       .select()
       .from(users)
@@ -60,24 +55,6 @@ export class TransferService {
     if (authorizerResponse !== true) {
       throw new BadGatewayException(['Authorizer denial.']);
     }
-
-    // const [newTransference, _cred, _deb] = await this.prisma.$transaction([
-    //   this.prisma.transference.create({
-    //     data: {
-    //       amount: dto.amount,
-    //       creditorId: dto.creditorId,
-    //       debitorId: dto.debitorId,
-    //     },
-    //   }),
-    //   this.prisma.wallet.update({
-    //     where: { userId: dto.creditorId },
-    //     data: { balance: { decrement: dto.amount } },
-    //   }),
-    //   this.prisma.wallet.update({
-    //     where: { userId: dto.debitorId },
-    //     data: { balance: { increment: dto.amount } },
-    //   }),
-    // ]);
 
     const newTransference = await this.db
       .transaction(async (tx) => {
