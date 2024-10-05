@@ -54,6 +54,7 @@
     "eslint": "^8.42.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "fast-check": "^3.22.0",
     "jest": "^29.5.0",
     "pactum": "^3.6.9",
     "pactum-matchers": "^1.1.7",

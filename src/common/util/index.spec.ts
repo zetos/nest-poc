@@ -1,5 +1,47 @@
 import * as utilModule from './index';
 
+import * as fc from 'fast-check';
+
+describe('property findSubstringInArray', () => {
+  it('should return a string from the array if it is a substring of the input', () => {
+    fc.assert(
+      fc.property(fc.string(), fc.array(fc.string()), (str, arr) => {
+        const result = utilModule.findSubstringInArray(str, arr);
+
+        if (result !== null) {
+          // Assert that the result is part of the array and a substring of str
+          expect(arr).toContain(result);
+          expect(str).toContain(result);
+        } else {
+          // If result is null, assert that no element in arr is a substring of str
+          expect(arr.some((el) => str.includes(el))).toBe(false);
+        }
+      }),
+    );
+  });
+
+  it('should return null for an empty array', () => {
+    fc.assert(
+      fc.property(fc.string(), (str) => {
+        const result = utilModule.findSubstringInArray(str, []);
+        expect(result).toBeNull();
+      }),
+    );
+  });
+
+  it('should return null when no string in the array is a substring', () => {
+    fc.assert(
+      fc.property(
+        fc.array(fc.string({ minLength: 1 }).filter((s) => !s.includes('a'))),
+        (arr) => {
+          const result = utilModule.findSubstringInArray('a', arr);
+          expect(result).toBeNull();
+        },
+      ),
+    );
+  });
+});
+
 describe('findSubstringInArray', () => {
   test('should find the substring in the array', () => {
     const str = 'hello';
