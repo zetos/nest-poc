@@ -6,6 +6,8 @@
 
 This is a Proof of Concept (POC) project using NestJS. The project demonstrates basic functionalities such as user creation and money transfer between users, incorporating various features like Prisma ORM, custom error handling, and comprehensive testing.
 
+> **Note:** Here is a [Drizzle Branch](https://github.com/zetos/nest-poc/tree/feat-drizzle) for comparation.
+
 ## Table of Contents
 
 - [Description](#description)
@@ -20,28 +22,6 @@ This is a Proof of Concept (POC) project using NestJS. The project demonstrates 
 ## Description
 
 This project serves as a POC for building a simple financial application using NestJS. It includes endpoints for creating users and transferring funds between users, with robust error handling and testing mechanisms.
-
-## TODO
-
-- [x] prisma error: Not Found
-- [x] prisma error: Unique
-- [ ] migrate amount BigInt to Int
-- [x] add hash algorithm
-- [x] add e2e tests
-- [x] mock fake authorizer
-- [x] add fetchRetry fun
-- [x] add unity tests
-- [x] add integration tests
-- [ ] add property tests?
-- [ ] edit README
-  - [ ] summary
-  - [ ] endpoints
-  - [ ] error handling
-  - [ ] about tests
-- [ ] serverless
-- [x] CI github actions
-- [x] Swagger
-- [ ] Add drizzle comparation
 
 ## Installation
 
