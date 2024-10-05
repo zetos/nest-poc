@@ -4,7 +4,7 @@
 
 # NestJS POC Project
 
-This is a Proof of Concept (POC) project using NestJS. The project demonstrates basic functionalities such as user creation and money transfer between users, incorporating various features like Prisma ORM, custom error handling, and comprehensive testing.
+This is a Proof of Concept (POC) project using NestJS. The project demonstrates basic functionalities such as user creation and money transfer between users, incorporating various features like Drizzle ORM for query building, custom error handling, and comprehensive testing.
 
 ## Table of Contents
 
@@ -20,28 +20,6 @@ This is a Proof of Concept (POC) project using NestJS. The project demonstrates 
 ## Description
 
 This project serves as a POC for building a simple financial application using NestJS. It includes endpoints for creating users and transferring funds between users, with robust error handling and testing mechanisms.
-
-## TODO
-
-- [x] prisma error: Not Found
-- [x] prisma error: Unique
-- [ ] migrate amount BigInt to Int
-- [x] add hash algorithm
-- [x] add e2e tests
-- [x] mock fake authorizer
-- [x] add fetchRetry fun
-- [x] add unity tests
-- [x] add integration tests
-- [ ] add property tests?
-- [ ] edit README
-  - [ ] summary
-  - [ ] endpoints
-  - [ ] error handling
-  - [ ] about tests
-- [ ] serverless
-- [x] CI github actions
-- [x] Swagger
-- [ ] Add drizzle comparation
 
 ## Installation
 
@@ -66,19 +44,13 @@ To get started with the project, follow these steps:
    DATABASE_URL=your_database_url
    ```
 
-4. Generate prisma client:
+4. Setup the database:
 
    ```bash
-   pnpm run prisma:generate
+   pnpm run drizzle:push
    ```
 
-5. Run the database migrations:
-
-   ```bash
-   pnpm run prisma:deploy
-   ```
-
-6. Start the development server:
+5. Start the development server:
    ```bash
    pnpm run start:dev
    ```
@@ -128,14 +100,14 @@ Response:
 ## Error Handling
 
 The project uses the `HttpException` error format for consistent error handling. Errors are returned with appropriate HTTP status codes and messages to help with debugging and user feedback.
-This is implemented by manually throwing a `HttpException`, `class-validator` errors and a custom filter to transform prisma exceptions into the `HttpException` format.
+This is implemented by manually throwing a `HttpException`, `class-validator` errors and a custom filter to transform database exceptions into the `HttpException` format.
 
 ## Testing
 
 The project includes various tests to ensure functionality and reliability:
 
 - Unit Tests: For individual pure functions located at the `util` directory.
-- Integration Tests: To test the integration between components. In this application it is used for _services_ that dont prisma, mocking requests or other external API calls.
+- Integration Tests: To test the integration between components. In this application it is used for _services_ that dont use a database service, mocking requests or other external API calls.
 - End-to-End (E2E) Tests: To simulate real-world scenarios. Third party API calls are mocked.
 
 Run the tests using:
@@ -147,7 +119,7 @@ pnpm run test:e2e # Make sure the db is running
 
 ## Features
 
-- Prisma ORM: For database operations.
+- Drizzle ORM: For database operations.
 - Error Handling: Using HttpException for consistent and informative error responses.
 - Swagger: For API documentation.
 - CI/CD: Configured with GitHub Actions.
